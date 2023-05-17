@@ -6,6 +6,6 @@ The first two columns should have the forward and reverse reads for the knockdow
 and reverse reads for the control replicates. We will have multiple text files each containing this format for each condition and transcription factor. 
 I will add a .txt file to show as an example. The .txt file will be in the same directory as all the fastq.gz files.
 
-I will add more information here once I develop the pipeline more
+I will add more information here once I develop the pipeline more.
 It currently runs as is, but only the first process is curated.
 I will need to updata the next two processess and then add a fourth.
