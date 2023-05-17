@@ -1,0 +1,6 @@
+454-Mock-n1-_cut-and-run_S1_L001_R1_001	454-Mock-n1-_cut-and-run_S1_L001_R2_001	455-Mock-n1_cut-and-run_S2_L001_R1_001	455-Mock-n1_cut-and-run_S2_L001_R2_001
+454-Mock-n1-_cut-and-run_S1_L002_R1_001	454-Mock-n1-_cut-and-run_S1_L002_R2_001	455-Mock-n1_cut-and-run_S2_L002_R1_001	455-Mock-n1_cut-and-run_S2_L002_R2_001
+454-Mock-n2_cut-and-run_S15_L001_R1_001	454-Mock-n2_cut-and-run_S15_L001_R2_001	455-Mock-n2_cut-and-run_S16_L001_R1_001	455-Mock-n2_cut-and-run_S16_L001_R2_001
+454-Mock-n2_cut-and-run_S15_L002_R1_001	454-Mock-n2_cut-and-run_S15_L002_R2_001	455-Mock-n2_cut-and-run_S16_L002_R1_001	455-Mock-n2_cut-and-run_S16_L002_R2_001
+454-Mock-n3_cut-and-run_S29_L001_R1_001	454-Mock-n3_cut-and-run_S29_L001_R2_001	455-Mock-n3_cut-and-run_S30_L001_R1_001	455-Mock-n3_cut-and-run_S30_L001_R2_001
+454-Mock-n3_cut-and-run_S29_L002_R1_001	454-Mock-n3_cut-and-run_S29_L002_R2_001	455-Mock-n3_cut-and-run_S30_L002_R1_001	455-Mock-n3_cut-and-run_S30_L002_R2_001
