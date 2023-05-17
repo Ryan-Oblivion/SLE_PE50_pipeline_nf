@@ -111,9 +111,15 @@ module load $SAMTOOLS
 
 bwa index -a bwtsw $ref
 
-bwa mem -M -t 8 $ref $fastp_file1 $fastp_file2 > aligned_reads.sam
+bwa aln -t 8 $ref $fastp_file1 > reads_1.sai
+bwa aln -t 8 $ref $fastp_file2 > reads_2.sai
+
+bwa sampe $ref reads_1.sai reads_2.sai $fastp_file1 $fastp_file2 \
+> aligned_reads.sam
 
 samtools view -b -h aligned_reads.sam -o aligned_reads_w_header.bam
+
+
 
 """
 
@@ -147,10 +153,15 @@ path "${out_f_ctr}.bam", emit: coor_sorted_bam
 module load $PICARD
 module load $SAMTOOLS
 
-java -Xmx44g -jar \$PICARD_JAR SortSam \
-I=$bam_file \
-O="${out_f_ctr}.bam" \
-SORT_ORDER=coordinate \
+# not using picard because its not compatible with bwa aln
+# only with bwa mem
+
+#java -Xmx44g -jar \$PICARD_JAR SortSam \
+#I=$bam_file \
+#O="${out_f_ctr}.bam" \
+#SORT_ORDER=coordinate \
+
+samtools sort $bam_file -o "${out_f_ctr}.bam"
 
 # we always have to create a BAM index file on any coordinate sorted BAM. 
 # NOT possible to do so if it is not coordinate sorted
