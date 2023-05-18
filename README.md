@@ -7,5 +7,4 @@ and reverse reads for the control replicates. We will have multiple text files e
 I will add a .txt file to show as an example. The .txt file will be in the same directory as all the fastq.gz files.
 
 I will add more information here once I develop the pipeline more.
-It currently runs as is, but only the first process is curated.
-I will need to updata the next two processess and then add a fourth.
+Now the Pipeline generates the .bam and .bai files and I can add another process to input these files into MACS2 and homer for the cut&run data.
