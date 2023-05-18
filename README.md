@@ -8,3 +8,8 @@ I will add a .txt file to show as an example. The .txt file will be in the same 
 
 I will add more information here once I develop the pipeline more.
 Now the Pipeline generates the .bam and .bai files and I can add another process to input these files into MACS2 and homer for the cut&run data.
+
+How the bam files are named: They will use the name of the first read from the two PE reads that were used to create them. Followed by the steps used up
+to that point. For example .filt.fastq.gz, shows that filtered fastq.gz PE files were used to finally get the .filt.fastq.gz.bam file. (454-Mock-n1-_cut-and-run_S1_L001_R1_001.filt.fastq.gz.bam)
+
+
