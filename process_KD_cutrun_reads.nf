@@ -160,7 +160,7 @@ module load $SAMTOOLS
 #O="${out_f_kd}.bam" \
 #SORT_ORDER=coordinate \
 
-samtools sort $bam_file -o "${out_f_kd}.bam"
+samtools sort $bam_file -o "${out_f_kd}.bam" -O bam
 
 # we always have to create a BAM index file on any coordinate sorted BAM. 
 # NOT possible to do so if it is not coordinate sorted
