@@ -3,7 +3,7 @@
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
 #SBATCH --partition=cs
-#SBATCH --time=5:00:00
+#SBATCH --time=15:00:00
 #SBATCH --mem=5GB
 #SBATCH --job-name=test_nf
 #SBATCH --mail-type=FAIL,END
@@ -72,7 +72,11 @@ echo $name_r_kd
 # I do not think i can use resume and could not figure out where to put it now that i have the 
 # parameters there.
 
-mkdir store_bam_files
+# making a new directory to store all the bam files in this condition
+
+new_c_n="$(basename -s .txt $PE_list)"
+new_dir='store_bam_files_'$new_c_n
+mkdir $new_dir
 
 nextflow run -resume process_KD_cutrun_reads.nf --param1 $read_f_kd --param2 $read_r_kd --param3 $name_f_kd --param4 $name_r_kd \
 --param5 $read_f_ctr --param6 $read_r_ctr --param7 $name_f_ctr --param8 $name_r_ctr
@@ -82,9 +86,11 @@ nextflow run -resume process_ctr_cutrun_reads.nf --param1 $read_f_kd --param2 $r
 --param5 $read_f_ctr --param6 $read_r_ctr --param7 $name_f_ctr --param8 $name_r_ctr
 
 location="$(find . -name "4*.bam*")"
-cp $location /scratch/rj931/tf_sle_project/store_bam_files
+cp $location '/scratch/rj931/tf_sle_project/'$new_dir
 
 
+# this is to get the fastqc files and the full names so i can
+# use to generate a multiqc report
 find $PWD -name \*fastqc.zip > fastqc_files.txt
 
 
@@ -95,3 +101,30 @@ new_c_n="$(basename -s .txt $PE_list)"
 module load multiqc/1.9
 
 multiqc --file-list fastqc_files.txt --filename 'multiqc_'$new_c_n'.html'
+
+# next, take all the bam files from the directory and use their
+# basename to place into a txt file. 454, 455 in the first and 
+# second columns respectively
+
+# store_bam_files
+
+path_to_bam_bai_files='/scratch/rj931/tf_sle_project/'$new_dir
+
+cd $path_to_bam_bai_files
+
+# now i need to create a name first for the file
+
+bam_file_name=$new_dir'_bam.txt'
+bai_file_name=$new_dir'_bai.txt'
+
+basename -s .filt.fastq.gz.bam 454*.bam > 454_bam.txt
+basename -s .filt.fastq.gz.bam 455*.bam > 455_bam.txt
+paste 454_bam.txt 455_bam.txt > $bam_file_name
+
+basename -s .filt.fastq.gz.bai 454*.bai > 454_bai.txt
+basename -s .filt.fastq.gz.bai 455*.bai > 455_bai.txt
+paste 454_bai.txt 455_bai.txt > $bai_file_name
+
+# the variable bam_file_name, stores all the bam files for the 
+# condition currently being processed.
+# the variable bai_file_name, does the same for bai files

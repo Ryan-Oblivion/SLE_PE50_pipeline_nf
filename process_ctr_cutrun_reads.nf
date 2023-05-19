@@ -117,7 +117,7 @@ bwa aln -t 8 $ref $fastp_file2 > reads_2.sai
 bwa sampe $ref reads_1.sai reads_2.sai $fastp_file1 $fastp_file2 \
 > aligned_reads.sam
 
-samtools view -b -h aligned_reads.sam -o aligned_reads_w_header.bam
+samtools view -b -h -q 20 aligned_reads.sam -o aligned_reads_w_header.bam
 
 
 
