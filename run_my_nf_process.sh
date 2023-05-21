@@ -2,9 +2,9 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
-#SBATCH --partition=cs
-#SBATCH --time=15:00:00
-#SBATCH --mem=5GB
+#SBATCH --partition=cm
+#SBATCH --time=10:00:00
+#SBATCH --mem=10GB
 #SBATCH --job-name=test_nf
 #SBATCH --mail-type=FAIL,END
 #SBATCH --mail-user=rj931@nyu.edu
@@ -128,3 +128,45 @@ paste 454_bai.txt 455_bai.txt > $bai_file_name
 # the variable bam_file_name, stores all the bam files for the 
 # condition currently being processed.
 # the variable bai_file_name, does the same for bai files
+
+
+# below I need to make a tag dir for homer, will do that in the nf script
+
+line2="$(less "$bam_file_name" | head -n ${SLURM_ARRAY_TASK_ID} | tail -n 1)" 
+
+# storing the basename of the kd and ctr bam files
+kd_bam="$(printf "%s" "${line2}" | cut -f1)"
+ctr_bam="$(printf "%s" "${line2}" | cut -f2)"
+
+# debugging to make sure the name is how i want
+echo $kd_bam
+echo $ctr_bam
+
+
+
+########################################
+
+# this section is just to test homer before i put it in a nf pipeline
+
+#module load homer/4.11
+#module load samtools/intel/1.14
+
+# cant use format bam option but the program still knows its a bam file
+# the tbp 1 parameter should remove all duplicate reads that start at the same position
+
+#makeTagDirectory $kd_bam'_tag_dir/' $kd_bam'.filt.fastq.gz.bam' -tbp 1
+
+#makeTagDirectory $ctr_bam'_tag_dir/' $ctr_bam'.filt.fastq.gz.bam' -tbp 1
+
+
+# now we run the tool to find peaks, with the kd tag dir and ctr tag dir
+
+#findPeaks $kd_bam'_tag_dir/' -style factor -i $ctr_bam'_tag_dir/' -o 
+#$path_to_bam_bai_files$kd_bam'peaks.txt'
+
+# now i have to go back to the directory that has the nf script
+cd ../
+
+nextflow run -resume homer_pipeline.nf  --param1 $kd_bam --param2 $ctr_bam --param3 $path_to_bam_bai_files 
+
+
