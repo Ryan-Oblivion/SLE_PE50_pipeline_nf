@@ -20,7 +20,7 @@ path path_to_bam_files
 
 output:
 
-path "./${kd_bam_name}_peaks.txt", emit: peaks_txt
+path "${path_to_bam_files}/${kd_bam_name}_peaks.txt", emit: peaks_txt
 
 """
 #module unload $REMOVEST
@@ -43,17 +43,40 @@ findPeaks $kd_bam_name'_tag_dir/' -style factor -i $ctr_bam_name'_tag_dir/' -o '
 }
 
 
+process homer_motif {
+
+input:
+path peaks_txt
+path ref
+path kd_bam_name
+path path_to_bam_files
+
+output:
+
+path "${path_to_bam_files}/${kd_bam_name}_motifOutput/", emit: dir_for_motif
+
+"""
+module load $HOMER
+
+# for output dir i am hoping each pe read will have its own dir with the motif output files
+
+#cd $path_to_bam_files
+
+findMotifsGenome.pl $peaks_txt $ref $path_to_bam_files'/'$kd_bam_name'_motifOutput/' -size 200
+"""
+}
 
 workflow {
 
 kd_bam_name = Channel.fromPath(params.param1)
 ctr_bam_name = Channel.fromPath(params.param2)
+ref = Channel.fromPath(params.ref)
 
 path_to_bam_files = Channel.fromPath(params.param3)
 
 main:
 
 homer_tag_dir(kd_bam_name, ctr_bam_name, path_to_bam_files)
-//homer_motif(homer_tag_dir.out.peaks_txt)
+homer_motif(homer_tag_dir.out.peaks_txt, ref, kd_bam_name, path_to_bam_files)
 
 }

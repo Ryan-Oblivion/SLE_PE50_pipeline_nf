@@ -100,7 +100,7 @@ new_c_n="$(basename -s .txt $PE_list)"
 
 module load multiqc/1.9
 
-multiqc --file-list fastqc_files.txt --filename 'multiqc_'$new_c_n'.html'
+multiqc -force --file-list fastqc_files.txt --filename 'multiqc_'$new_c_n'.html'
 
 # next, take all the bam files from the directory and use their
 # basename to place into a txt file. 454, 455 in the first and 
