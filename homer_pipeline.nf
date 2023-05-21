@@ -20,7 +20,7 @@ path path_to_bam_files
 
 output:
 
-path "${path_to_bam_files}/${kd_bam_name}_peaks.txt", emit: peaks_txt
+path "./${kd_bam_name}_peaks.txt", emit: peaks_txt
 
 """
 #module unload $REMOVEST
@@ -36,7 +36,7 @@ makeTagDirectory $kd_bam_name'_tag_dir/' $kd_bam_name'.filt.fastq.gz.bam' -tbp 1
 
 makeTagDirectory $ctr_bam_name'_tag_dir/' $ctr_bam_name'.filt.fastq.gz.bam' -tbp 1
 
-findPeaks $kd_bam_name'_tag_dir/' -style factor -i $ctr_bam_name'_tag_dir/' -o $path_to_bam_files'/'$kd_bam_name'_peaks.txt'
+findPeaks $kd_bam_name'_tag_dir/' -style factor -i $ctr_bam_name'_tag_dir/' -o './'$kd_bam_name'_peaks.txt'
 
  
 """
