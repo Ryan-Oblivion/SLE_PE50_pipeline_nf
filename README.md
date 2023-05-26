@@ -12,4 +12,4 @@ Now the Pipeline generates the .bam and .bai files and I can add another process
 How the bam files are named: They will use the name of the first read from the two PE reads that were used to create them. Followed by the steps used up
 to that point. For example .filt.fastq.gz, shows that filtered fastq.gz PE files were used to finally get the .filt.fastq.gz.bam file. (454-Mock-n1-_cut-and-run_S1_L001_R1_001.filt.fastq.gz.bam)
 
-
+**I need to remove the --dedup option for the fastp process. That option is nolonger part of fastp**
